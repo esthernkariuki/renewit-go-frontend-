@@ -6,7 +6,7 @@ import SigninPage from "./SignIn";
 import Dashboard from "./Dashboard";
 import { Sidebar } from "./Sharedcomponents/Sidebar";
 import ProductList from "./Products";
-import UpcyclerRequests from "./ProductList";
+import UpcyclerRequests from "./UpcyclerRequests";
 import ViewMatched from "./ViewMatched";
 import "./App.css";
 
