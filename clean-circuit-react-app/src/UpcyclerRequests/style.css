@@ -45,6 +45,8 @@ body {
 .product-table tr:last-child td {
   border-bottom: none;
 }
+
+
 .action-btn {
   border: none;
   border-radius: 5px;
@@ -252,7 +254,7 @@ body {
 @media (min-width: 1000px) and (max-width: 1199px) {
   .product-page-container {
     margin-top: -2em;
-    width: 104%;
+    width: 100%;
     height: 50vh;
     position: fixed;
     padding: 28px;
@@ -318,5 +320,39 @@ body {
     margin-left: 13em;
     font-size: 2rem;
     
+  }
+}
+@media (min-width: 1512px) and (min-height: 982px) {
+  .product-page-container {
+    margin-top: 5em;
+    width: 99%;
+    height: 68vh;
+    padding: 38px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  .pagination {
+    margin-top: 3.2em;
+    margin-left: 68%;
+  }
+  .products-header {
+    margin-left: 15em;
+    font-size: 2.1rem;
+  }
+  .product-table th,
+  .product-table td {
+    padding: 20px 22px;
+    font-size: 1.08rem;
+  }
+  .product-table {
+    width: 90%;
+    font-size: 1.18rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .modal-content {
+    max-width: 480px;
+    padding: 36px 40px;
+    font-size: 1.05rem;
   }
 }
