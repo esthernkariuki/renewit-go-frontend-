@@ -73,7 +73,7 @@ export default function UpcyclerRequests() {
     }
   };
 
-  if (loading) return <p style={{ marginTop: "-5px" }}>Loading...</p>;
+  if (loading) return <p style={{display: "flex",justifyContent: "center",fontSize:"25px", alignItems: "center",height: "100vh",  width: "100vw"   }}>Loading requests...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
