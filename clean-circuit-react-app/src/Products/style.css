@@ -169,6 +169,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-right: 35em;
 }
 
 .pagination .btn {
@@ -318,7 +319,7 @@
   }
 
   .product-table {
-    width: 82% !important;
+    width: 77% !important;
     margin-left: 300px !important;
     font-size: 18px;
   }
@@ -353,8 +354,3 @@
     margin-left: 45% !important;
   }
 }
-
-
-
-
-
