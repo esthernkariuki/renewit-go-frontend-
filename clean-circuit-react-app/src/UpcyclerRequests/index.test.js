@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import UpcyclerRequests from "../ProductList/index";
+import UpcyclerRequests from "../UpcyclerRequests/index"
 import * as hooks from "../hooks/useFetchUpcyclerRequest";
 
 global.alert = jest.fn();

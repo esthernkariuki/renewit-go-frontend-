@@ -12,7 +12,7 @@ jest.mock("./SignUp", () => () => <div>SignupPage</div>);
 jest.mock("./SignIn", () => () => <div>SigninPage</div>);
 jest.mock("./Dashboard", () => () => <div>DashboardPage</div>);
 jest.mock("./Products", () => () => <div>ProductListPage</div>);
-jest.mock("./ProductList", () => () => <div>UpcyclerRequestsPage</div>);
+jest.mock("./UpcyclerRequests", () => () => <div>UpcyclerRequestsPage</div>);
 jest.mock("./ViewMatched", () => () => <div>ViewMatchedPage</div>);
 
 describe("Layout Component Routing and Sidebar", () => {
