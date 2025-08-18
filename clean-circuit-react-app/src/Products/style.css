@@ -23,7 +23,7 @@
 }
 .product-table {
   
-  width: 86%;
+  width: 80% !important;
   border-collapse: collapse;
   background: rgb(248, 248, 248);
   box-shadow: 10px 10px 16px #F8F8F8;
@@ -56,7 +56,7 @@
   text-align: left;
 }
 .product-table th {
-  background-color: #2E6600;
+  background-color: #2E6600 !important;
   color: white;
   font-weight: 600;
 }
@@ -176,7 +176,7 @@
   margin: 0 4px;
   border-radius: 4px;
   border: 1px solid #ccc;
-  background: #fff;
+  background-color:#2E6600;
   cursor: pointer;
   font-size: 14px;
 }
@@ -184,6 +184,128 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+@media (min-width: 1000px) and (max-width: 1199px) {
+  .sidebar {
+    width: 200px;
+    padding: 15px;
+  }
+
+  .main-content {
+    padding: 15px 20px;
+  }
+
+  .product-table {
+    width: 70% !important;
+    margin-left: 290px !important;
+    font-size: 15px;
+  }
+
+  .product-table th,
+  .product-table td {
+    padding: 10px 10px;
+  }
+
+  .btn-add {
+    margin-left: 210px;
+    font-size: 1rem;
+    padding: 8px 14px;
+  }
+
+  .btn {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+  .product-container h2 {
+    margin-left: 400px; 
+  }
+  .pagination{
+    margin-left: 30% !important;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1380px) {
+  .sidebar {
+    width: 220px;
+    padding: 18px;
+  }
+
+  .main-content {
+    padding: 18px 25px;
+  }
+
+  .product-table {
+    width: 80% !important;
+    margin-left: 265px !important;
+    font-size: 16px;
+  }
+
+  .product-table th,
+  .product-table td {
+    padding: 7px 11px;
+  }
+
+  .btn-add {
+    margin-left: 240px;
+    font-size: 1.05rem;
+    padding: 9px 16px;
+  }
+
+  .btn {
+    font-size: 12.5px;
+    padding: 6px 11px;
+  }
+
+  .product-container h2 {
+    margin-left: 500px;
+  }
+   .pagination{
+    margin-left: 20% !important;
+  }
+  
+}
+
+@media (min-width: 1381px) and (max-width: 1500px) {
+  .sidebar {
+    width: 240px;
+    padding: 20px;
+  }
+
+  .main-content {
+    padding: 20px 28px;
+  }
+
+  .product-table {
+    width: 85% !important;
+    margin-left: 260px !important;
+    font-size: 16.5px;
+  }
+
+  .product-table th,
+  .product-table td {
+    padding: 8px 12px;
+  }
+
+  .btn-add {
+    margin-left: 260px;
+    font-size: 1.1rem;
+    padding: 10px 18px;
+  }
+
+  .btn {
+    font-size: 13px;
+    padding: 6px 12px;
+  }
+
+  .product-container h2 {
+    margin-left: 600px;
+  }
+   .pagination{
+    margin-left: 40% !important;
+  }
+}
+
 
 
 

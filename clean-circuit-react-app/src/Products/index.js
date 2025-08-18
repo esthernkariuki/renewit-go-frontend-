@@ -1,8 +1,9 @@
 import React, { useState, useCallback } from 'react';
+import './style.css'
 import { useProducts } from '../hooks/useFetchProducts';
 import ProductForm from './components/AddUpcyclerProducts';
 
-import './style.css'
+
 function ProductList() {
   const {
     products,
