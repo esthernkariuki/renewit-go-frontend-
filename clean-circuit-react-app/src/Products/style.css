@@ -121,7 +121,8 @@
   box-sizing: border-box;
 }
 .product-container h2{
- margin-left: 800px;
+ margin-left:0;
+ margin-right: 100px;
 }
 
 .btn-submit {
@@ -169,7 +170,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 35em;
+  margin-left: 20px;
 }
 
 .pagination .btn {
@@ -219,7 +220,7 @@
   }
 
   .product-container h2 {
-    margin-left: 400px; 
+  margin-left: 500px !important;
   }
   .pagination{
     margin-left: 30% !important;
@@ -237,8 +238,8 @@
   }
 
   .product-table {
-    width: 80% !important;
-    margin-left: 265px !important;
+    width: 75% !important;
+    margin-left: 289px !important;
     font-size: 16px;
   }
 
@@ -259,7 +260,7 @@
   }
 
   .product-container h2 {
-    margin-left: 500px;
+    margin-left: 600px !important;
   }
    .pagination{
     margin-left: 20% !important;
@@ -279,7 +280,7 @@
 
   .product-table {
     width: 85% !important;
-    margin-left: 260px !important;
+    margin-left: 285px !important;
     font-size: 16.5px;
   }
 
@@ -300,7 +301,7 @@
   }
 
   .product-container h2 {
-    margin-left: 600px;
+    margin-left: 300px !important;
   }
    .pagination{
     margin-left: 40% !important;
@@ -341,8 +342,8 @@
   }
 
   .product-container h2 {
-    margin-left: 1000px;
     font-size: 1.7rem;
+    margin-left: 800px !important;
   }
 
   .modal-content {
@@ -351,6 +352,6 @@
   }
 
   .pagination {
-    margin-left: 45% !important;
+    margin-left: 8% !important;
   }
 }
