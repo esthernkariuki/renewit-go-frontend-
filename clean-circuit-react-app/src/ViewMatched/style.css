@@ -318,4 +318,9 @@ main>div {
    margin-left: 30%;
  }
 }
-
+@media (min-width: 1512px) and (min-height: 982px){
+  .paginationContainer{
+    margin-top: -2em;
+   margin-left: 30%;
+  }
+}
