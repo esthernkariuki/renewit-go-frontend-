@@ -22,7 +22,6 @@
   overflow-y: auto;
 }
 .product-table {
-  
   width: 80% !important;
   border-collapse: collapse;
   background: rgb(248, 248, 248);
@@ -317,7 +316,6 @@
 
   .main-content {
     padding: 28px 44px;
-    margin-top: -30px;
   }
 
   .product-table {
