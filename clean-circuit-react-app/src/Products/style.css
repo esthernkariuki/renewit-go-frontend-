@@ -12,9 +12,9 @@
   overflow-y: auto;
   min-height: 100vh;
 }
-
-
-
+.product-container{
+  margin-top: 20px;
+}
 .main-content {
   flex-grow: 1;
   padding: 20px 30px;
@@ -317,6 +317,7 @@
 
   .main-content {
     padding: 28px 44px;
+    margin-top: -30px;
   }
 
   .product-table {
