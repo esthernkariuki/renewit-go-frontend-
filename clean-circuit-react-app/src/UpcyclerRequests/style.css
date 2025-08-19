@@ -324,7 +324,7 @@ body {
 }
 @media (min-width: 1512px) and (min-height: 982px) {
   .product-page-container {
-    margin-top: 5em;
+    margin-top: -2em;
     width: 99%;
     height: 68vh;
     padding: 38px;
