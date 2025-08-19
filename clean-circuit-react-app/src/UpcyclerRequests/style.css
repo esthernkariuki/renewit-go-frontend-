@@ -286,11 +286,12 @@ body {
   .product-page-container {
     margin-top: -2.5em;
     width: 104%;
-    height: 58vh;
+    height: 100vh;
     position: fixed;
     padding: 30px;
     font-size: 14px;
     box-sizing: border-box;
+    overflow: auto;
   }
   .pagination {
     margin-top: 2.7em;
@@ -306,11 +307,12 @@ body {
   .product-page-container {
     margin-top: -1em;
     width: 88%;
-    height: 63vh;
+    height: 100vh;
     padding: 32px;
     position: fixed;
     font-size: 15px;
     box-sizing: border-box;
+    overflow: auto;
   }
   .pagination {
     margin-top: 3em;
