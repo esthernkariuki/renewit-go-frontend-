@@ -81,6 +81,7 @@ export default function UpcyclerRequests() {
       <div className="products-card">
         <div className="products-header">PRODUCTS</div>
         <button className="add-product-button" onClick={handleAddClick}>Add Product</button>
+          <div className="product-table-wrapper">
         <table className="product-table">
           <thead>
             <tr>
@@ -113,6 +114,7 @@ export default function UpcyclerRequests() {
             ))}
           </tbody>
         </table>
+        </div>
         <div className="pagination">
           <button disabled={page === 1} onClick={() => setPage(page - 1)}>Prev</button>
           <span> Page {page} of {totalPages} </span>

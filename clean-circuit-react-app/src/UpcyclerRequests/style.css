@@ -7,7 +7,7 @@ body {
   padding: 32px;
   width: 85.7%;
   margin-left: -2em;
-  margin-top: 5em;
+  margin-top: -2em;
 }
 .product-image {
   width: 44px;
@@ -286,11 +286,12 @@ body {
   .product-page-container {
     margin-top: -2.5em;
     width: 104%;
-    height: 58vh;
+    height: 100vh;
     position: fixed;
     padding: 30px;
     font-size: 14px;
     box-sizing: border-box;
+    overflow: auto;
   }
   .pagination {
     margin-top: 2.7em;
@@ -306,11 +307,12 @@ body {
   .product-page-container {
     margin-top: -1em;
     width: 88%;
-    height: 63vh;
+    height: 100vh;
     padding: 32px;
     position: fixed;
     font-size: 15px;
     box-sizing: border-box;
+    overflow: auto;
   }
   .pagination {
     margin-top: 3em;
@@ -324,24 +326,24 @@ body {
 }
 @media (min-width: 1512px) and (min-height: 982px) {
   .product-page-container {
-    margin-top: 5em;
+    margin-top: -2em;
     width: 99%;
-    height: 68vh;
+    height: 100vh;
     padding: 38px;
     font-size: 16px;
     box-sizing: border-box;
+    overflow: auto;
   }
   .pagination {
-    margin-top: 3.2em;
+    margin-top: -1em;
     margin-left: 68%;
   }
   .products-header {
-    margin-left: 8em;
+    margin-left: 15em;
     font-size: 2.1rem;
   }
   .product-table th,
   .product-table td {
-    padding: 20px 22px;
     font-size: 1.08rem;
   }
   .product-table {
@@ -349,6 +351,8 @@ body {
     font-size: 1.18rem;
     margin-left: auto;
     margin-right: auto;
+   
+
   }
   .modal-content {
     max-width: 480px;
