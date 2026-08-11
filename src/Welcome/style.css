@@ -1,69 +1,398 @@
-.welcome-page-container {
-  display: flex;
-  height: 95vh;
-  width:97vw;
-  margin-left: -19px;
-}
-.left-section {
-  flex: 1;
-  display: flex;
-  align-items: left;
-  justify-content: left;
+/* ==========================
+   GLOBAL
+========================== */
+
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
-.left-section::before{
-  content:"";
-  position: absolute;
-  top: 0;
-  left:0;
-  width: 100vh;
-  height: 100%;
-  z-index: 1;
-  background-color: rgba(76,175,80,0.4);
-}
-.pillow-image {
-  width: 99vh;
-  height: 107vh;
-  margin-top: -90px;
 
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
-.right-section {
-  flex: 1;
+
+
+/* ==========================
+   MAIN PAGE
+========================== */
+
+.welcome-page {
+  position: fixed;
+
+  inset: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  overflow: hidden;
+
   display: flex;
-  flex-direction: column;
+
   align-items: center;
   justify-content: center;
-  padding: 40px;
-  text-align: center;
-  box-sizing: border-box;
-  background-color: white;
-  z-index: 1;
-}
-.logo-container {
-  margin-bottom: 30px;
-}
-.brand-logo {
-  width: 90px;
-  height: 90px;
-}
-.right-section h1 {
-  font-size: 3.2em;
-  color: #00db00;
-  margin-bottom: 15px;
-  line-height: 1.2;
-}
-.right-section p {
-  font-size: 1.3em;
-  color: #00db00;
-  margin-bottom: 40px;
-  max-width: 500px;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  font-family: "Noto Sans", sans-serif;
 }
 
-.button-group {
+
+/* ==========================
+   CONTENT
+========================== */
+
+.welcome-content {
+  position: relative;
+
+  z-index: 2;
+
+  width: 100%;
+
+  max-width: 900px;
+
+  padding: 35px;
+
   display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  text-align: center;
+
+  color: white;
+
+  animation: contentFade 1s ease;
 }
 
 
+/* ==========================
+   LOGO
+========================== */
+
+.welcome-logo-container {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 45px;
+
+  animation: slideDown 0.8s ease;
+}
+
+.welcome-logo {
+  width: 65px;
+
+  height: 65px;
+
+  object-fit: contain;
+
+  background: white;
+
+  border-radius: 50%;
+
+  padding: 6px;
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+.welcome-brand-name {
+  font-size: 1.8rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.5px;
+}
+
+
+/* ==========================
+   SMALL TITLE
+========================== */
+
+.welcome-small-title {
+  font-size: 0.85rem;
+
+  font-weight: 700;
+
+  letter-spacing: 4px;
+
+  margin-bottom: 15px;
+
+  opacity: 0.9;
+}
+
+
+/* ==========================
+   MAIN HEADING
+========================== */
+
+.welcome-text h1 {
+  font-size: clamp(3rem, 6vw, 5.5rem);
+
+  line-height: 1.05;
+
+  font-weight: 700;
+
+  max-width: 850px;
+
+  margin-bottom: 25px;
+
+  letter-spacing: -2px;
+}
+
+.welcome-text h1 span {
+  display: block;
+
+  color: #8cff8c;
+}
+
+
+/* ==========================
+   DESCRIPTION
+========================== */
+
+.welcome-description {
+  max-width: 650px;
+
+  font-size: 1.15rem;
+
+  line-height: 1.7;
+
+  color: rgba(255, 255, 255, 0.88);
+
+  margin: 0 auto 35px;
+}
+
+
+/* ==========================
+   BUTTONS
+========================== */
+
+.welcome-buttons {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 18px;
+
+  margin-bottom: 40px;
+}
+
+.welcome-buttons button {
+  min-width: 155px;
+
+  min-height: 48px;
+
+  border-radius: 10px;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.welcome-buttons button:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+
+/* ==========================
+   FOOTER
+========================== */
+
+.welcome-footer {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 15px;
+
+  opacity: 0.75;
+}
+
+.welcome-footer p {
+  font-size: 0.8rem;
+
+  letter-spacing: 1.5px;
+
+  white-space: nowrap;
+}
+
+.footer-line {
+  width: 45px;
+
+  height: 1px;
+
+  background: rgba(255, 255, 255, 0.5);
+}
+
+
+/* ==========================
+   ANIMATIONS
+========================== */
+
+@keyframes contentFade {
+
+  from {
+    opacity: 0;
+
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+
+}
+
+@keyframes slideDown {
+
+  from {
+    opacity: 0;
+
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+
+}
+
+
+/* ==========================
+   TABLET
+========================== */
+
+@media (max-width: 768px) {
+
+  .welcome-content {
+    padding: 25px;
+  }
+
+  .welcome-logo-container {
+    margin-bottom: 30px;
+  }
+
+  .welcome-logo {
+    width: 55px;
+
+    height: 55px;
+  }
+
+  .welcome-brand-name {
+    font-size: 1.5rem;
+  }
+
+  .welcome-text h1 {
+    font-size: 3.2rem;
+
+    letter-spacing: -1px;
+  }
+
+  .welcome-description {
+    font-size: 1rem;
+
+    max-width: 500px;
+  }
+
+}
+
+
+/* ==========================
+   MOBILE
+========================== */
+
+@media (max-width: 480px) {
+
+  .welcome-content {
+    padding: 20px;
+  }
+
+  .welcome-logo-container {
+    margin-bottom: 25px;
+  }
+
+  .welcome-logo {
+    width: 50px;
+
+    height: 50px;
+  }
+
+  .welcome-brand-name {
+    font-size: 1.4rem;
+  }
+
+  .welcome-small-title {
+    font-size: 0.7rem;
+
+    letter-spacing: 3px;
+  }
+
+  .welcome-text h1 {
+    font-size: 2.7rem;
+
+    line-height: 1.05;
+  }
+
+  .welcome-description {
+    font-size: 0.9rem;
+
+    line-height: 1.6;
+
+    margin-bottom: 25px;
+  }
+
+  .welcome-buttons {
+    width: 100%;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    margin-bottom: 25px;
+  }
+
+  .welcome-buttons button {
+    width: 100%;
+
+    max-width: 280px;
+  }
+
+  .welcome-footer p {
+    font-size: 0.65rem;
+
+    letter-spacing: 1px;
+  }
+
+  .footer-line {
+    width: 25px;
+  }
+
+}

@@ -1,24 +1,28 @@
 const API_ROOT = process.env.REACT_APP_BASE_URL;
-export const signUpUser = async ({ username, name, email, phone, password, role }) => {
+
+export const signUpUser = async ({ name, phone, password, role }) => {
   try {
     const response = await fetch(`${API_ROOT}auth/register`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
-        user: { username, email, password },
         name,
         phone,
+        password,
         role,
       }),
     });
+
     const data = await response.json();
 
     if (!response.ok) {
-      const errorText = data.message || JSON.stringify(data) || "Signup failed";
-      throw new Error(errorText);
+      throw new Error(data.error || data.message || "Signup failed");
     }
-     return data;}
-  catch (error) {
-  throw error;
+
+    return data;
+  } catch (error) {
+    throw error;
   }
 };

@@ -1,0 +1,478 @@
+/* =====================================================
+   MATERIALS PAGE
+===================================================== */
+
+.materials-page {
+  min-height: 100vh;
+  background: #f5f8f3;
+  padding: 40px;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.materials-header {
+  max-width: 850px;
+  margin: 0 auto 35px;
+  text-align: center;
+}
+
+.materials-eyebrow {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: #16820b;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.materials-header h1 {
+  margin: 0 0 12px;
+  color: #111;
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.materials-header p {
+  max-width: 650px;
+  margin: 0 auto;
+  color: #718071;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+
+/* =====================================================
+   TOOLBAR
+===================================================== */
+
+.materials-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  max-width: 1100px;
+  margin: 0 auto 15px;
+}
+
+.materials-search {
+  position: relative;
+  flex: 1;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  font-size: 15px;
+}
+
+.materials-search input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px 15px 13px 43px;
+  border: 1px solid #d5ddd2;
+  border-radius: 8px;
+  background: white;
+  color: #222;
+  font-size: 14px;
+  outline: none;
+}
+
+.materials-search input:focus {
+  border-color: #16820b;
+  box-shadow: 0 0 0 3px rgba(22, 130, 11, 0.08);
+}
+
+.condition-filter {
+  min-width: 170px;
+  padding: 13px 14px;
+  border: 1px solid #d5ddd2;
+  border-radius: 8px;
+  background: white;
+  color: #333;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+}
+
+.condition-filter:focus {
+  border-color: #16820b;
+}
+
+
+/* =====================================================
+   RESULT COUNT
+===================================================== */
+
+.materials-result-count {
+  max-width: 1100px;
+  margin: 0 auto 20px;
+  color: #7b8579;
+  font-size: 13px;
+}
+
+
+/* =====================================================
+   GRID
+===================================================== */
+
+.materials-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+
+/* =====================================================
+   MATERIAL CARD
+===================================================== */
+
+.material-card {
+  overflow: hidden;
+  background: white;
+  border: 1px solid #dfe7dc;
+  border-radius: 12px;
+  box-shadow:
+    0 3px 12px rgba(0, 0, 0, 0.05);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.material-card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 8px 22px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =====================================================
+   IMAGE
+===================================================== */
+
+.material-image-wrapper {
+  height: 210px;
+  background: #edf2eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.material-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.material-no-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #879287;
+}
+
+.material-no-image span {
+  font-size: 35px;
+  margin-bottom: 8px;
+}
+
+.material-no-image p {
+  margin: 0;
+  font-size: 13px;
+}
+
+
+/* =====================================================
+   CARD CONTENT
+===================================================== */
+
+.material-card-content {
+  padding: 20px;
+}
+
+.material-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.material-label {
+  display: block;
+  margin-bottom: 5px;
+  color: #8a9489;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+}
+
+.material-card-top h2 {
+  margin: 0;
+  color: #171917;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.material-condition {
+  flex-shrink: 0;
+  padding: 5px 9px;
+  border-radius: 20px;
+  background: #e7f5e5;
+  color: #16820b;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+
+/* =====================================================
+   DETAILS
+===================================================== */
+
+.material-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 15px 0;
+  border-top: 1px solid #edf1eb;
+  border-bottom: 1px solid #edf1eb;
+}
+
+.material-detail span {
+  display: block;
+  margin-bottom: 5px;
+  color: #929b91;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.material-detail strong {
+  color: #16820b;
+  font-size: 15px;
+}
+
+
+/* =====================================================
+   TRADER
+===================================================== */
+
+.material-trader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 17px;
+}
+
+.trader-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #e7f5e5;
+  color: #16820b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.material-trader span {
+  display: block;
+  margin-bottom: 3px;
+  color: #929b91;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.material-trader strong {
+  color: #333;
+  font-size: 13px;
+}
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+.material-date {
+  margin: 15px 0;
+  color: #929b91;
+  font-size: 11px;
+}
+
+
+/* =====================================================
+   BUTTON
+===================================================== */
+
+.view-material-button {
+  width: 100%;
+  padding: 11px 15px;
+  border: 1px solid #16820b;
+  border-radius: 7px;
+  background: white;
+  color: #16820b;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.view-material-button:hover {
+  background: #16820b;
+  color: white;
+}
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+.materials-error {
+  max-width: 1100px;
+  margin: 0 auto 25px;
+  padding: 14px 16px;
+  border: 1px solid #f2a3a3;
+  border-radius: 8px;
+  background: #fff0f0;
+  color: #c62828;
+}
+
+.materials-error strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.materials-error span {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.materials-error button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #c62828;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+
+/* =====================================================
+   EMPTY STATE
+===================================================== */
+
+.materials-empty {
+  max-width: 700px;
+  margin: 50px auto;
+  padding: 55px 25px;
+  text-align: center;
+  background: white;
+  border: 1px solid #dfe7dc;
+  border-radius: 12px;
+}
+
+.materials-empty-icon {
+  margin-bottom: 15px;
+  color: #16820b;
+  font-size: 45px;
+}
+
+.materials-empty h2 {
+  margin: 0 0 10px;
+  color: #222;
+  font-size: 22px;
+}
+
+.materials-empty p {
+  margin: 0 0 20px;
+  color: #7b847b;
+  font-size: 14px;
+}
+
+.clear-filter-button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  background: #16820b;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.materials-loading {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #718071;
+}
+
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 15px;
+  border: 3px solid #dfe7dc;
+  border-top-color: #16820b;
+  border-radius: 50%;
+  animation: materialSpin 0.8s linear infinite;
+}
+
+@keyframes materialSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 768px) {
+
+  .materials-page {
+    padding: 25px 18px;
+  }
+
+  .materials-header h1 {
+    font-size: 29px;
+  }
+
+  .materials-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .condition-filter {
+    width: 100%;
+  }
+
+  .materials-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .material-image-wrapper {
+    height: 220px;
+  }
+}

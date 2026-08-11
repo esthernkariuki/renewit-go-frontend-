@@ -1,10 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { Button } from '../Sharedcomponents/Buttons';
-import { useFetchSignUp} from '../hooks/useFetchSignUp';
-import {usePasswordToggle} from '../hooks/usePasswordToggle'
-import './style.css';
+import React from "react";
+import { Link } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Button } from "../Sharedcomponents/Buttons";
+import { useFetchSignUp } from "../hooks/useFetchSignUp";
+import { usePasswordToggle } from "../hooks/usePasswordToggle";
+
+import "./style.css";
 
 const SignUp = () => {
   const {
@@ -15,138 +16,257 @@ const SignUp = () => {
     handleSubmit,
   } = useFetchSignUp();
 
-  const [showPassword, toggleShowPassword] = usePasswordToggle();
-  const [showConfirmPassword, toggleShowConfirmPassword] = usePasswordToggle();
+  const [showPassword, toggleShowPassword] =
+    usePasswordToggle();
+
+  const [showConfirmPassword, toggleShowConfirmPassword] =
+    usePasswordToggle();
 
   return (
-    <div className="signup-page-container">
-      <div className="signup-left-panel">
-        <div className="signup-header"><span>RenewIt</span></div>
-        <div className="signup-hero-text">
-          <h1>Your Inspiration</h1>
-          <h1>Your Vision</h1>
-          <h1>Your Story</h1>
-          <p>Sign-up to unlock your imagination</p>
-        </div>
-      </div>
+    <div
+      className="signup-page"
+      style={{
+        backgroundImage: `
+          linear-gradient(
+            rgba(18, 44, 25, 0.6),
+            rgba(18, 44, 25, 0.6)
+          ),
+          url("${process.env.PUBLIC_URL}/images/background.jpg")
+        `,
+      }}
+    >
+      <div className="signup-overlay">
+        <div className="signup-card">
 
-      <div className="signup-right-panel">
-        <h2>Sign Up</h2>
-        <form onSubmit={handleSubmit} data-testid="signup-form">
-          <div className="form-group">
-            <label htmlFor="name">Full Name</label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Enter your full name"
-              required  />
-          </div>
+          {/* RenewIt Logo */}
+          <img
+            src={`${process.env.PUBLIC_URL}/images/renewit-logo.png`}
+            alt="RenewIt Logo"
+            className="signup-logo"
+          />
 
-          <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <input
-              id="username"
-              name="username"
-              type="text"
-              value={formData.username}
-              onChange={handleChange}
-              placeholder="Enter a username"
-              required
-              autoComplete="username"/>
-          </div>
+          {/* Heading */}
+          <h1>Create Account</h1>
 
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Enter your email"
-              required
-              autoComplete="email"/>
-          </div>
+          <p className="signup-subtitle">
+            Join Kenya's circular economy by buying,
+            selling and upcycling reusable materials.
+          </p>
 
-          <div className="form-group">
-            <label htmlFor="phone">Phone</label>
-            <input
-              id="phone"
-              name="phone"
-              type="text"
-              value={formData.phone}
-              onChange={handleChange}
-              placeholder="Enter your phone number"
-              required
-              autoComplete="tel"/>
-          </div>
+          {/* Sign Up Form */}
+          <form onSubmit={handleSubmit}>
 
-          <div className="form-group" style={{ position: 'relative' }}>
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              name="password"
-              type={showPassword ? "text" : "password"}
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Enter your password"
-              required
-              autoComplete="new-password"/>
-            <span
-              className="password-toggle-icon"
-              role="button"
-              tabIndex={0}
-              aria-label={showPassword ? "Hide password" : "Show password"}
-              onClick={toggleShowPassword}
-              onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') toggleShowPassword(); }}
-              style={{ cursor: 'pointer' }}>
-              {showPassword ? <FaEye /> : <FaEyeSlash />}
-            </span>
-          </div>
+            {/* Full Name */}
+            <div className="form-group">
+              <label htmlFor="name">
+                Full Name
+              </label>
 
-          <div className="form-group" style={{ position: 'relative' }}>
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <input
-              id="confirmPassword"
-              name="confirmPassword"
-              type={showConfirmPassword ? "text" : "password"}
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              placeholder="Confirm your password"
-              required
-              autoComplete="new-password"
-            />
-            <span
-              className="password-toggle-icon"
-              role="button"
-              tabIndex={0}
-              aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
-              onClick={toggleShowConfirmPassword}
-              onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') toggleShowConfirmPassword(); }}
-              style={{ cursor: 'pointer' }}
+              <input
+                id="name"
+                type="text"
+                name="name"
+                placeholder="Enter your full name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            {/* Phone Number */}
+            <div className="form-group">
+              <label htmlFor="phone">
+                Phone Number
+              </label>
+
+              <input
+                id="phone"
+                type="tel"
+                name="phone"
+                placeholder="0712345678"
+                value={formData.phone}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            {/* Role */}
+            <div className="form-group">
+              <label>
+                Role
+              </label>
+
+              <div className="role-buttons">
+
+                {/* Buyer */}
+                <button
+                  type="button"
+                  className={
+                    formData.role === "buyer"
+                      ? "role-btn active"
+                      : "role-btn"
+                  }
+                  onClick={() =>
+                    handleChange({
+                      target: {
+                        name: "role",
+                        value: "buyer",
+                      },
+                    })
+                  }
+                >
+                  Buyer
+                </button>
+
+                {/* Trader */}
+                <button
+                  type="button"
+                  className={
+                    formData.role === "trader"
+                      ? "role-btn active"
+                      : "role-btn"
+                  }
+                  onClick={() =>
+                    handleChange({
+                      target: {
+                        name: "role",
+                        value: "trader",
+                      },
+                    })
+                  }
+                >
+                  Trader
+                </button>
+
+                {/* Upcycler */}
+                <button
+                  type="button"
+                  className={
+                    formData.role === "upcycler"
+                      ? "role-btn active"
+                      : "role-btn"
+                  }
+                  onClick={() =>
+                    handleChange({
+                      target: {
+                        name: "role",
+                        value: "upcycler",
+                      },
+                    })
+                  }
+                >
+                  Upcycler
+                </button>
+
+              </div>
+            </div>
+
+            {/* Password */}
+            <div className="form-group password-group">
+              <label htmlFor="password">
+                Password
+              </label>
+
+              <input
+                id="password"
+                type={
+                  showPassword
+                    ? "text"
+                    : "password"
+                }
+                name="password"
+                placeholder="Enter password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+
+              <button
+                type="button"
+                className="password-toggle-icon"
+                onClick={toggleShowPassword}
+                aria-label={
+                  showPassword
+                    ? "Hide password"
+                    : "Show password"
+                }
+              >
+                {showPassword ? (
+                  <FaEye />
+                ) : (
+                  <FaEyeSlash />
+                )}
+              </button>
+            </div>
+
+            {/* Confirm Password */}
+            <div className="form-group password-group">
+              <label htmlFor="confirmPassword">
+                Confirm Password
+              </label>
+
+              <input
+                id="confirmPassword"
+                type={
+                  showConfirmPassword
+                    ? "text"
+                    : "password"
+                }
+                name="confirmPassword"
+                placeholder="Confirm password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+              />
+
+              <button
+                type="button"
+                className="password-toggle-icon"
+                onClick={toggleShowConfirmPassword}
+                aria-label={
+                  showConfirmPassword
+                    ? "Hide password"
+                    : "Show password"
+                }
+              >
+                {showConfirmPassword ? (
+                  <FaEye />
+                ) : (
+                  <FaEyeSlash />
+                )}
+              </button>
+            </div>
+
+            {/* Error */}
+            {error && (
+              <p className="signup-error">
+                {error}
+              </p>
+            )}
+
+            {/* Submit */}
+            <Button
+              type="submit"
+              className="signup-form-button"
+              disabled={loading}
             >
-              {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
-            </span>
-          </div>
+              {loading
+                ? "Creating..."
+                : "Create Account"}
+            </Button>
 
-          {error && <p style={{ color: 'red', marginBottom: '15px' }}>{error}</p>}
+          </form>
 
-          <Button
-            type="submit"
-            variant="primary"
-            disabled={loading}
-            className="signup-form-button"
-          >
-            {loading ? 'Signing Up...' : 'Sign Up'}
-          </Button>
-        </form>
+          {/* Login */}
+          <p className="login-link-text">
+            Already have an account?
 
-        <p className="login-link-text">
-          Already have an account? <Link to="/login">Sign In</Link>
-        </p>
+            <Link to="/login">
+              Sign In
+            </Link>
+          </p>
+
+        </div>
       </div>
     </div>
   );

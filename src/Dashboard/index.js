@@ -1,237 +1,662 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ProfileIcon } from "../Sharedcomponents/Sidebar";
-import MultiSeriesBarChart from "../Sharedcomponents/MultiSeriesBarChart";
-import { useFetchUseList } from "../hooks/useFetchUserList";
-import { useRequests } from "../hooks/useRequests";
-import { useBarChart } from "../hooks/useBarChart";
+import {
+  FaRecycle,
+  FaBoxOpen,
+  FaLayerGroup,
+  FaArrowRight,
+  FaSearch,
+} from "react-icons/fa";
+
+import { useDashboardData } from "../hooks/useDashboardData";
+
 import "./style.css";
 
 export default function Dashboard() {
   const navigate = useNavigate();
+
   const token = localStorage.getItem("token");
-  const username = localStorage.getItem("username");
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const ITEMS_PER_PAGE = 5; 
-  const [searchInput, setSearchInput] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
+  /*
+   * Get the username/phone saved during login.
+   * We keep this as a fallback because the backend user lookup
+   * may use either username or phone.
+   */
+  const storedUsername =
+    localStorage.getItem("username") ||
+    localStorage.getItem("phone") ||
+    "";
 
-  React.useEffect(() => {
+  const {
+    user,
+    materials,
+    products,
+    loading,
+    error,
+  } = useDashboardData(token, storedUsername);
+
+  const [search, setSearch] = useState("");
+
+  /*
+   * Redirect to login when there is no token.
+   */
+  useEffect(() => {
     if (!token) {
       navigate("/login");
     }
   }, [token, navigate]);
 
-  const {
-    userName,
-    loading: loadingUser,
-    error: userError,
-  } = useFetchUseList(token, username);
-  const { data: myRequests, loading: loadingRequests, error: errorRequests } = useRequests(token);
-  const { data: barData, loading: loadingBar, error: errorBar } = useBarChart(token);
+  /*
+   * Hooks must always run before conditional returns.
+   * These calculations are therefore done before loading/error
+   * screens are returned.
+   */
 
-  if (!token) return null;
+  const materialList = useMemo(() => {
+    return Array.isArray(materials) ? materials : [];
+  }, [materials]);
 
-  const loading = loadingUser || loadingRequests || loadingBar;
-  const error = userError || errorRequests || errorBar;
+  const productList = useMemo(() => {
+    return Array.isArray(products) ? products : [];
+  }, [products]);
 
-  if (error) return <div className="dashboard-error">Error: {error}</div>;
-  if (loading) return <div className="dashboard-loading">Loading dashboard...</div>;
+  /*
+   * Try to get a name from the user returned by the backend.
+   * Fall back to localStorage.
+   */
+  const displayName = useMemo(() => {
+    if (user?.name) return user.name;
+    if (user?.username) return user.username;
+    if (user?.phone) return user.phone;
 
-  const myRequestsArray = Array.isArray(myRequests) ? myRequests : [];
-  const barDataArray = Array.isArray(barData) ? barData : [];
+    /*
+     * Sometimes the login response is stored as JSON
+     * in localStorage under "user".
+     */
+    try {
+      const storedUser = localStorage.getItem("user");
 
-  const totalRequestsCount = myRequestsArray.reduce(
-    (sum, req) => sum + (req.quantity || 0),
-    0
-  );
-  const distinctRequestTypes = new Set(myRequestsArray.map((req) => req.type)).size;
-  const totalProductsCount = barDataArray.reduce(
-    (sum, item) => sum + (item.quantity || 0),
-    0
-  );
+      if (storedUser) {
+        const parsedUser = JSON.parse(storedUser);
 
-  const summary = [
-    { title: "Total Requests", count: totalRequestsCount },
-    { title: "Request Types", count: distinctRequestTypes },
-    { title: "Total Products", count: totalProductsCount },
-  ];
+        return (
+          parsedUser?.name ||
+          parsedUser?.username ||
+          parsedUser?.phone ||
+          storedUsername ||
+          "there"
+        );
+      }
+    } catch (err) {
+      console.warn("Could not read stored user:", err);
+    }
 
-  const chartData = barDataArray.map((item) => ({
-    label: item.type || "",
-    value: item.quantity,
-  }));
+    return storedUsername || "there";
+  }, [user, storedUsername]);
 
-  const recent = myRequestsArray.map((req) => ({
-    activity: `${req.quantity} ${req.type} requested`,
-    type: req.type,
-    date: req.requested_at
-      ? req.requested_at.split("T")[0].replace(/-/g, "/")
-      : new Date().toISOString().split("T")[0].replace(/-/g, "/"),
-  }));
+  /*
+   * Total material quantity.
+   */
+  const totalMaterials = useMemo(() => {
+    return materialList.reduce(
+      (total, material) =>
+        total + Number(material?.quantity || 1),
+      0
+    );
+  }, [materialList]);
 
-  const filteredRecent = recent.filter(
-    (rec) =>
-      rec.activity?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      rec.type?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      rec.date?.includes(searchTerm)
-  );
+  /*
+   * Number of different material types.
+   */
+  const materialTypes = useMemo(() => {
+    return new Set(
+      materialList
+        .map((material) => material?.type)
+        .filter(Boolean)
+        .map((type) => String(type).toLowerCase())
+    ).size;
+  }, [materialList]);
 
-  const totalItems = filteredRecent.length;
-  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
-  const startIdx = (currentPage - 1) * ITEMS_PER_PAGE;
-  const paginatedRecent = filteredRecent.slice(startIdx, startIdx + ITEMS_PER_PAGE);
+  /*
+   * Total upcycled products.
+   */
+  const totalProducts = useMemo(() => {
+    return productList.reduce(
+      (total, product) =>
+        total + Number(product?.quantity || 1),
+      0
+    );
+  }, [productList]);
 
-  function handleSearchClick() {
-    setSearchTerm(searchInput.trim());
-    setCurrentPage(1);
+  /*
+   * Material quantities grouped by type.
+   */
+  const materialTypeCounts = useMemo(() => {
+    const counts = {};
+
+    materialList.forEach((material) => {
+      const type = material?.type || "Other";
+
+      counts[type] =
+        (counts[type] || 0) +
+        Number(material?.quantity || 1);
+    });
+
+    return counts;
+  }, [materialList]);
+
+  /*
+   * Recent activity.
+   */
+  const activities = useMemo(() => {
+    const materialActivities = materialList.map((material) => ({
+      activity: `${material?.quantity || 1} ${
+        material?.type || "Material"
+      } added`,
+      type: material?.type || "Material",
+      date:
+        material?.listed_at ||
+        material?.created_at ||
+        "",
+    }));
+
+    const productActivities = productList.map((product) => ({
+      activity: `${product?.quantity || 1} ${
+        product?.type || "Product"
+      } upcycled`,
+      type: product?.type || "Product",
+      date:
+        product?.created_at ||
+        product?.listed_at ||
+        "",
+    }));
+
+    return [
+      ...materialActivities,
+      ...productActivities,
+    ].sort((a, b) => {
+      const dateA = a.date
+        ? new Date(a.date).getTime()
+        : 0;
+
+      const dateB = b.date
+        ? new Date(b.date).getTime()
+        : 0;
+
+      return dateB - dateA;
+    });
+  }, [materialList, productList]);
+
+  /*
+   * Search recent activities.
+   */
+  const filteredActivities = useMemo(() => {
+    const term = search.toLowerCase().trim();
+
+    if (!term) {
+      return activities;
+    }
+
+    return activities.filter((activity) => {
+      return (
+        activity.activity
+          .toLowerCase()
+          .includes(term) ||
+        activity.type
+          .toLowerCase()
+          .includes(term)
+      );
+    });
+  }, [activities, search]);
+
+  /*
+   * No token.
+   */
+  if (!token) {
+    return null;
   }
 
-  function handleSearchKeyPress(e) {
-    if (e.key === "Enter") {
-      handleSearchClick();
-    }
+  /*
+   * Loading state.
+   */
+  if (loading) {
+    return (
+      <main className="dashboard-main">
+        <div className="dashboard-state">
+          <div className="state-icon">
+            <FaRecycle />
+          </div>
+
+          <h2>Loading dashboard...</h2>
+
+          <p>
+            Preparing your RenewIt dashboard.
+          </p>
+        </div>
+      </main>
+    );
+  }
+
+  /*
+   * Error state.
+   */
+  if (error) {
+    return (
+      <main className="dashboard-main">
+        <div className="dashboard-state error-state">
+          <div className="state-icon">
+            !
+          </div>
+
+          <h2>Something went wrong</h2>
+
+          <p>{error}</p>
+
+          <button
+            type="button"
+            className="retry-button"
+            onClick={() => window.location.reload()}
+          >
+            Try Again
+          </button>
+        </div>
+      </main>
+    );
   }
 
   return (
-    <div className="dashboard-layout">
-      <main className="dashboard-main">
-        <div className="dashboard-header">
-          <h2>Dashboard Overview</h2>
-          <ProfileIcon />
+    <main className="dashboard-main">
+
+      {/* =====================================
+          HEADER
+      ====================================== */}
+
+      <header className="dashboard-heading">
+        <div>
+          <span className="eyebrow">
+            RENEWIT
+          </span>
+
+          <h1>
+            Dashboard
+          </h1>
+
+          <p>
+            Your circular economy overview
+          </p>
+        </div>
+      </header>
+
+      {/* =====================================
+          WELCOME
+      ====================================== */}
+
+      <section className="welcome-card">
+        <div className="welcome-content">
+          <span className="welcome-label">
+            Welcome back 
+          </span>
+
+          <h2>
+            {displayName}!
+          </h2>
+
+          <p>
+            Ready to renew, reuse and reimagine?
+          </p>
         </div>
 
-        <div className="welcome-row">Welcome {userName || username || "User"}!</div>
+        <div className="welcome-logo">
+  <img
+    src="/images/renewit-logo.png"
+    alt="RenewIt"
+  />
+</div>
+      </section>
 
-        <div className="dashboard-summary-cards">
-          {summary.map((item, idx) => (
-            <div className="summary-card" key={idx}>
-              <div className="summary-title">{item.title}</div>
-              <div className="summary-count">{item.count}</div>
-            </div>
-          ))}
-        </div>
+      {/* =====================================
+          SUMMARY CARDS
+      ====================================== */}
 
-        <div className="dashboard-row">
-          <div className="dashboard-analytics">
-            <div className="analytics-card">
-              <div className="analytics-title">Order Source Overview</div>
-            </div>
+      <section className="summary-grid">
+
+        <article className="summary-card">
+          <div className="summary-icon">
+            <FaRecycle />
           </div>
 
-          <div className="dashboard-analytics">
-            <div className="analytics-card">
-              <div className="analytics-title">Upcycled Products</div>
-              <MultiSeriesBarChart data={chartData} />
-            </div>
+          <div className="summary-content">
+            <span>Total Materials</span>
+
+            <strong>
+              {totalMaterials}
+            </strong>
           </div>
-        </div>
+        </article>
 
-        <div className="dashboard-row">
-          <div className="recent-activity-card">
-            <div className="analytics-title">Recent Activities</div>
+        <article className="summary-card">
+          <div className="summary-icon">
+            <FaLayerGroup />
+          </div>
 
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginBottom: "1em",
-                alignItems: "center",
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center", gap: "0.5em" }}>
-                <input
-                  type="text"
-                  placeholder="Search activities..."
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  onKeyDown={handleSearchKeyPress}
-                  className="search-input"
-                  aria-label="Search activities"
-                />
-              </div>
+          <div className="summary-content">
+            <span>Material Types</span>
 
-            </div>
+            <strong>
+              {materialTypes}
+            </strong>
+          </div>
+        </article>
 
-            <table className="recent-table">
-              <thead>
-                <tr>
-                  <th>Activity</th>
-                  <th>Type</th>
-                  <th>Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {paginatedRecent.length > 0 ? (
-                  paginatedRecent.map((rec, idx) => (
-                    <tr key={idx}>
-                      <td>{rec.activity}</td>
-                      <td>{rec.type}</td>
-                      <td>{rec.date}</td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="3" style={{ textAlign: "center" }}>
-                      No activities found.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+        <article className="summary-card">
+          <div className="summary-icon">
+            <FaBoxOpen />
+          </div>
 
-            <div
-              className="pagination-controls"
-              style={{
-                marginTop: "1em",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "12px",
-              }}
-            >
-              <button
-                disabled={currentPage === 1}
-                onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                style={{
-                  backgroundColor: currentPage === 1 ? "white" : "#2E6600",
-                  color: currentPage === 1 ? "#" : "white",
-                  cursor: currentPage === 1 ? "not-allowed" : "pointer",
-                  padding: "6px 12px",
-                  borderRadius: "4px",
-                  border: "none",
-                  fontWeight: "bold",
-                }}
-              >
-                Previous
-              </button>
+          <div className="summary-content">
+            <span>Upcycled Products</span>
 
-              <span style={{ fontWeight: "bold" }}>
-                Page {currentPage} of {totalPages || 1}
+            <strong>
+              {totalProducts}
+            </strong>
+          </div>
+        </article>
+
+      </section>
+
+      {/* =====================================
+          MAIN OVERVIEW
+      ====================================== */}
+
+      <section className="dashboard-grid">
+
+        {/* MATERIAL OVERVIEW */}
+
+        <article className="dashboard-card material-card">
+
+          <div className="card-header">
+            <div>
+              <span className="card-eyebrow">
+                MATERIALS
               </span>
 
-              <button
-                disabled={currentPage === totalPages || totalPages === 0}
-                onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-                style={{
-                  backgroundColor:
-                    currentPage === totalPages || totalPages === 0 ? "#e0e0e0" : "#2E6600",
-                  color: currentPage === totalPages || totalPages === 0 ? "#888" : "white",
-                  cursor:
-                    currentPage === totalPages || totalPages === 0 ? "not-allowed" : "pointer",
-                  padding: "6px 12px",
-                  borderRadius: "4px",
-                  border: "none",
-                  fontWeight: "bold",
-                }}
-              >
-                Next
-              </button>
+              <h2>
+                Material Overview
+              </h2>
+            </div>
+
+            <div className="card-header-icon">
+              <FaRecycle />
             </div>
           </div>
+
+          {Object.keys(materialTypeCounts).length > 0 ? (
+            <div className="material-list">
+              {Object.entries(materialTypeCounts)
+                .slice(0, 5)
+                .map(([type, quantity]) => (
+                  <div
+                    className="material-row"
+                    key={type}
+                  >
+                    <div className="material-row-top">
+                      <span>{type}</span>
+
+                      <strong>
+                        {quantity}
+                      </strong>
+                    </div>
+
+                    <div className="material-bar">
+                      <div
+                        className="material-bar-fill"
+                        style={{
+                          width: `${Math.min(
+                            quantity * 10,
+                            100
+                          )}%`,
+                        }}
+                      />
+                    </div>
+                  </div>
+                ))}
+            </div>
+          ) : (
+            <div className="empty-state">
+              <FaRecycle />
+
+              <p>
+                No materials available yet.
+              </p>
+
+              <button
+                type="button"
+                className="small-action-button"
+                onClick={() =>
+                  navigate("/requests")
+                }
+              >
+                Add Material
+                <FaArrowRight />
+              </button>
+            </div>
+          )}
+        </article>
+
+        {/* PRODUCTS */}
+
+        <article className="dashboard-card product-card">
+
+          <div className="card-header">
+            <div>
+              <span className="card-eyebrow">
+                MARKETPLACE
+              </span>
+
+              <h2>
+                Upcycled Products
+              </h2>
+            </div>
+
+            <div className="card-header-icon">
+              <FaBoxOpen />
+            </div>
+          </div>
+
+          <div className="product-number">
+            {totalProducts}
+          </div>
+
+          <p className="product-description">
+            {totalProducts === 1
+              ? "upcycled product available"
+              : "upcycled products available"}
+          </p>
+
+          <button
+            type="button"
+            className="outline-button"
+            onClick={() =>
+              navigate("/products")
+            }
+          >
+            View Products
+            <FaArrowRight />
+          </button>
+        </article>
+
+      </section>
+
+      {/* =====================================
+          QUICK ACTIONS
+      ====================================== */}
+
+      <section className="quick-actions">
+
+        <div className="quick-actions-heading">
+          <span className="card-eyebrow">
+            QUICK ACTIONS
+          </span>
+
+          <h2>
+            Continue your journey
+          </h2>
         </div>
-      </main>
-    </div>
+
+        <div className="action-buttons">
+
+          <button
+            type="button"
+            onClick={() =>
+              navigate("/requests")
+            }
+          >
+            <FaRecycle />
+
+            <span>
+              My Requests
+            </span>
+
+            <FaArrowRight />
+          </button>
+
+          <button
+            type="button"
+            onClick={() =>
+              navigate("/matched")
+            }
+          >
+            <FaBoxOpen />
+
+            <span>
+              Browse Offers
+            </span>
+
+            <FaArrowRight />
+          </button>
+
+          <button
+            type="button"
+            onClick={() =>
+              navigate("/products")
+            }
+          >
+            <FaLayerGroup />
+
+            <span>
+              My Products
+            </span>
+
+            <FaArrowRight />
+          </button>
+
+        </div>
+      </section>
+
+      {/* =====================================
+          RECENT ACTIVITY
+      ====================================== */}
+
+      <section className="activity-card">
+
+        <div className="activity-header">
+
+          <div>
+            <span className="card-eyebrow">
+              ACTIVITY
+            </span>
+
+            <h2>
+              Recent Activity
+            </h2>
+
+            <p>
+              Your latest material and product activity.
+            </p>
+          </div>
+
+          <div className="activity-search">
+            <FaSearch />
+
+            <input
+              type="text"
+              placeholder="Search activity..."
+              value={search}
+              onChange={(event) =>
+                setSearch(event.target.value)
+              }
+              aria-label="Search activity"
+            />
+          </div>
+
+        </div>
+
+        <div className="activity-table-wrapper">
+
+          <table className="activity-table">
+
+            <thead>
+              <tr>
+                <th>Activity</th>
+                <th>Type</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              {filteredActivities.length > 0 ? (
+                filteredActivities
+                  .slice(0, 5)
+                  .map((activity, index) => (
+                    <tr key={`${activity.activity}-${index}`}>
+
+                      <td>
+                        <div className="activity-name">
+                          <span className="activity-dot" />
+                          {activity.activity}
+                        </div>
+                      </td>
+
+                      <td>
+                        <span className="activity-badge">
+                          {activity.type}
+                        </span>
+                      </td>
+
+                      <td>
+                        {activity.date
+                          ? new Date(
+                              activity.date
+                            ).toLocaleDateString()
+                          : "—"}
+                      </td>
+
+                    </tr>
+                  ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan="3"
+                    className="no-activity"
+                  >
+                    <FaRecycle />
+
+                    <span>
+                      No recent activity found.
+                    </span>
+                  </td>
+                </tr>
+              )}
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+    </main>
   );
 }

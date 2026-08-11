@@ -1,0 +1,432 @@
+.material-details-page {
+  min-height: 100vh;
+  background: #f5f8f3;
+  padding: 40px;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  background: transparent;
+  border: none;
+
+  color: #287600;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  margin-bottom: 30px;
+}
+
+.back-button:hover {
+  color: #1d5600;
+}
+
+.material-details-header {
+  margin-bottom: 30px;
+}
+
+.material-details-eyebrow {
+  margin: 0 0 8px;
+
+  color: #287600;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+.material-details-header h1 {
+  margin: 0 0 10px;
+
+  color: #111;
+
+  font-size: 34px;
+  font-weight: 700;
+}
+
+.material-details-header p {
+  margin: 0;
+
+  color: #718071;
+
+  font-size: 14px;
+}
+
+/* =====================================================
+   MAIN CARD
+===================================================== */
+
+.material-details-card {
+  max-width: 1050px;
+
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  background: white;
+
+  border: 1px solid #dfe7dc;
+
+  border-radius: 14px;
+
+  overflow: hidden;
+
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+}
+
+/* =====================================================
+   IMAGE
+===================================================== */
+
+.material-details-image {
+  min-height: 500px;
+
+  background: #edf2eb;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+.material-details-image img {
+  width: 100%;
+  height: 100%;
+
+  min-height: 500px;
+
+  object-fit: cover;
+}
+
+.material-details-no-image {
+  text-align: center;
+
+  color: #899189;
+}
+
+.material-details-no-image span {
+  display: block;
+
+  font-size: 55px;
+
+  margin-bottom: 10px;
+}
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.material-details-content {
+  padding: 40px;
+}
+
+.material-details-top {
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 30px;
+}
+
+.details-label {
+  display: block;
+
+  color: #899189;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  margin-bottom: 7px;
+}
+
+.material-details-top h2 {
+  margin: 0;
+
+  color: #111;
+
+  font-size: 28px;
+}
+
+.details-condition {
+  padding: 7px 12px;
+
+  border-radius: 20px;
+
+  background: #e7f5e5;
+
+  color: #287600;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  text-transform: capitalize;
+
+  white-space: nowrap;
+}
+
+/* =====================================================
+   PRICE
+===================================================== */
+
+.material-price-section {
+  padding: 20px;
+
+  margin-bottom: 25px;
+
+  background: #f5f8f3;
+
+  border-radius: 10px;
+}
+
+.material-price-section span {
+  display: block;
+
+  color: #899189;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  margin-bottom: 7px;
+}
+
+.material-price-section strong {
+  color: #287600;
+
+  font-size: 28px;
+}
+
+/* =====================================================
+   INFO
+===================================================== */
+
+.material-info-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 20px;
+
+  padding-bottom: 25px;
+
+  border-bottom: 1px solid #edf0eb;
+}
+
+.material-info-grid span {
+  display: block;
+
+  color: #899189;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.7px;
+
+  margin-bottom: 6px;
+}
+
+.material-info-grid strong {
+  color: #333;
+
+  font-size: 15px;
+}
+
+/* =====================================================
+   TRADER
+===================================================== */
+
+.material-trader-details {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-top: 25px;
+}
+
+.trader-avatar-large {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  background: #e7f5e5;
+
+  color: #287600;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+}
+
+.material-trader-details span {
+  display: block;
+
+  color: #899189;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  margin-bottom: 4px;
+}
+
+.material-trader-details strong {
+  color: #333;
+
+  font-size: 14px;
+}
+
+/* =====================================================
+   DATE
+===================================================== */
+
+.material-listed-date {
+  margin: 20px 0 25px;
+
+  color: #9a9f98;
+
+  font-size: 12px;
+}
+
+/* =====================================================
+   BUY BUTTON
+===================================================== */
+
+.buy-material-button {
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  padding: 14px 20px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: #287600;
+
+  color: white;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.buy-material-button:hover {
+  background: #1d5600;
+}
+
+/* =====================================================
+   LOADING / ERROR
+===================================================== */
+
+.material-details-loading {
+  text-align: center;
+
+  padding: 100px 20px;
+
+  color: #718071;
+
+  font-size: 15px;
+}
+
+.material-details-error {
+  max-width: 500px;
+
+  margin: 60px auto;
+
+  padding: 30px;
+
+  background: white;
+
+  border: 1px solid #f2a3a3;
+
+  border-radius: 10px;
+
+  text-align: center;
+}
+
+.material-details-error h2 {
+  color: #c62828;
+
+  margin-top: 0;
+}
+
+.material-details-error p {
+  color: #718071;
+}
+
+.material-details-error button {
+  padding: 10px 18px;
+
+  border: none;
+
+  border-radius: 6px;
+
+  background: #287600;
+
+  color: white;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 768px) {
+  .material-details-page {
+    padding: 20px;
+  }
+
+  .material-details-header h1 {
+    font-size: 28px;
+  }
+
+  .material-details-card {
+    grid-template-columns: 1fr;
+  }
+
+  .material-details-image {
+    min-height: 300px;
+  }
+
+  .material-details-image img {
+    min-height: 300px;
+  }
+
+  .material-details-content {
+    padding: 25px;
+  }
+}
